@@ -15,3 +15,13 @@
   text-rendering: optimizeLegibility;
   background: #000000;
 }
+
+.notFound {
+  color: white;
+margin: 0 auto;
+}
+
+.notFound__link {
+  color: white;
+  margin-left: 12px;
+}

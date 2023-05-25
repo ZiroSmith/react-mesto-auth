@@ -35,7 +35,7 @@ const Register = () => {
       </form>
       <div className="register__signin">
         <p className="register__text">Уже зарегистрированы?</p>
-        <Link to="login" className="register__login-link">Войти</Link>
+        <Link to="/sign-in" className="register__login-link">Войти</Link>
       </div>
     </div>
   );

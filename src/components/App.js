@@ -1,12 +1,14 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Header from './Header.js';
 import Register from "./Register";
 import Login from "./Login";
+import NotFound from "./NotFound";
 import ProtectedRoute from './ProtectedRoute'
 import Main from './Main.js';
 import Footer from './Footer.js';
 import { api } from "../utils/Api";
+import InfoTooltip from './InfoTooltip.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 import EditProfilePopup from './EditProfilePopup.js';
@@ -138,9 +140,10 @@ function App() {
                 onCardDelete={handleCardDelete}
                 cards={cards}
               />} />
-            <Route path='*' element={ <Navigate to='/sign-in' /> } />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         <Footer />
+        <InfoTooltip onClose={closeAllPopups}/>
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
