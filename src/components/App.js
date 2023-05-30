@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
 import Register from "./Register";
 import Login from "./Login";
@@ -14,16 +14,64 @@ import AddPlacePopup from './AddPlacePopup.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import ImagePopup from './ImagePopup.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import * as Auth from '../utils/auth.js';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+  const [isCheckSignUp, setIsCheckSignUp] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser , setCurrentUser ] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [isLoggedIn, setLoggedIn] = React.useState(null);
+  const navigate = useNavigate();
 
+
+  const handleLogin = (email, password) => {
+    return Auth.authorize(email, password)
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+        setLoggedIn(true);
+        navigate('/');
+      })
+  }
+
+
+  const handleRegister = (email, password) => {
+    return Auth.register(email, password)
+    .then(() => {
+      setIsInfoTooltipPopupOpen(true)
+      setIsCheckSignUp(true);
+    })
+    .then(() => {
+      navigate('/sign-in')
+    })
+    .catch(() => {
+      setIsInfoTooltipPopupOpen(true);
+      setIsCheckSignUp(false);
+    })
+  }
+  
+
+  const checkToken = () => {
+    const token = localStorage.getItem("token");
+    Auth.getToken(token)
+      .then((data) => {
+        if(data) {
+          setLoggedIn(true);
+          navigate('/');
+        } else {
+          setLoggedIn(false);
+        }
+      });
+  }
+
+  React.useEffect(() => {
+    checkToken();
+  }, []);
 
   React.useEffect(() => {
     api
@@ -119,6 +167,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
     setSelectedCard({});
   }
   
@@ -127,11 +176,12 @@ function App() {
       <div className="App">
         <Header />
           <Routes>
-            <Route path="/sign-up" element={<Register />} />
-            <Route path="/sign-in" element={<Login />} />
+            <Route path="/sign-up" element={<Register handleRegister={handleRegister} />} />
+            <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
             <Route path="/" element={
               <ProtectedRoute 
                 element={Main}
+                isLoggedIn={isLoggedIn}
                 onEditAvatar={handleEditAvatarClick}
                 onAddPlace={handleAddPlaceClick}
                 onEditProfile={handleEditProfileClick}
@@ -143,7 +193,14 @@ function App() {
             <Route path='*' element={<NotFound />} />
           </Routes>
         <Footer />
-        <InfoTooltip onClose={closeAllPopups}/>
+        <InfoTooltip 
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          isCheckSignUp={isCheckSignUp}
+          signUpText={isCheckSignUp
+            ? "Вы успешно зарегистрировались!"
+            : "Что-то пошло не так! Попробуйте ещё раз."}
+          />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}

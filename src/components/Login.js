@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import './Login.css';
 
-const Login = () => {
+function Login({handleLogin}) {
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
-  })
+  });
+
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -16,21 +17,19 @@ const Login = () => {
     });
   }
   const handleSubmit = (e) => {
+    const { email, password } = formValue;
     e.preventDefault();
-    if (!formValue.username || !formValue.password){
-      return;
-    }
+    handleLogin(email, password).catch((e) => setErrorMessage(e));
   }
 
   return (
     <div className="login">
-      <p className="login__welcome">
-        Вход
-      </p>
+      <p className="login__welcome">Вход</p>
+      <p className="login__error">{errorMessage}</p>
       <form onSubmit={handleSubmit} className="login__form">
         <input className="login__input" required id="username" name="email" type="text" value={formValue.username} onChange={handleChange} placeholder='Email' />
         <input className="login__input" required id="password" name="password" type="password" value={formValue.password} onChange={handleChange} placeholder='Пароль' />
-        <div className="login__button-container">
+        <div className="login__button">
           <button type="submit" className="login__link">Войти</button>
         </div>
       </form>

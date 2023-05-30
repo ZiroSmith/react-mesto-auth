@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import './Register.css';
 
-const Register = () => {
+const Register = ({handleRegister}) => {
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
-  })
+  });
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -16,20 +15,20 @@ const Register = () => {
       [name]: value
     });
   }
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
+  const handleSubmit = (e) => {
+    const { email, password } = formValue;
+    e.preventDefault();
+    handleRegister(email, password);
   }
 
   return (
     <div className="register">
-      <p className="register__welcome">
-        Регистрация
-      </p>
+      <p className="register__welcome">Регистрация</p>
       <form onSubmit={handleSubmit} className="register__form">
         <input id="email" className="login__input" name="email" type="email" value={formValue.email} onChange={handleChange} placeholder='Email' />
         <input id="password" className="login__input" name="password" type="password" value={formValue.password} onChange={handleChange} placeholder='Пароль' />
-        <div className="register__button-container">
+        <div className="register__button">
           <button type="submit" onSubmit={handleSubmit} className="register__link">Зарегистрироваться</button>
         </div>
       </form>

@@ -11,3 +11,9 @@
   .header__link:visited {
     color: white;
   }
+
+  .header__link:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+    cursor: pointer;
+  }
