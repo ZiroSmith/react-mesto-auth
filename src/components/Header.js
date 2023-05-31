@@ -20,7 +20,7 @@ function Header({ loggedEmail, signOut }) {
       )}
       {location.pathname === "/" && (
         <div className="header__info">
-          <p>{loggedEmail}</p>
+          <p className="header__email">{loggedEmail}</p>
           <button onClick={signOut} className="header__button">
             Выйти
           </button>

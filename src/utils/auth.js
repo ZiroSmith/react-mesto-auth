@@ -1,6 +1,6 @@
 export const BASE_URL = "https://auth.nomoreparties.co";
 
-function getResponseData(url, options) {
+function request(url, options) {
   const fetchAddress = `${BASE_URL}/${url}`;
 
   return fetch(fetchAddress, options).then((res) => {
@@ -13,7 +13,7 @@ function getResponseData(url, options) {
 }
 
 export const register = (email, password) => {
-  return getResponseData(`signup`, {
+  return request(`signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -24,7 +24,7 @@ export const register = (email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return getResponseData(`signin`, {
+  return request(`signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -35,7 +35,7 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  return getResponseData(`users/me`, {
+  return request(`users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",

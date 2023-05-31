@@ -25,7 +25,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
   return (
     <PopupWithForm
-      title={"Редактировать профиль"}
+      title={"Добавить место"}
       name={"item"}
       buttonText={"Создать"}
       isOpen={isOpen}

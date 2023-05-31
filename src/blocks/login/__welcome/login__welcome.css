@@ -7,3 +7,10 @@
     width: 358px;
     margin: 60px auto 20px;
   }
+
+
+  @media screen and (max-width: 425px) {
+    .login__welcome {
+      width: 100%;
+    }
+  }

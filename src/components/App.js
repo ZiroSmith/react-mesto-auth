@@ -25,7 +25,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] =
     React.useState(false);
   const [isSuccessSignUp, setisSuccessSignUp] = React.useState(false);
-  const [isOpened, setIsOpened] = React.useState(false);
+  const [isImagePopupOpened, setImagePopupOpened] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -151,7 +151,7 @@ function App() {
 
   const handleCardClick = (cardData) => {
     setSelectedCard(cardData);
-    setIsOpened(true);
+    setImagePopupOpened(true);
   };
 
   function handleEditAvatarClick() {
@@ -172,7 +172,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
     setSelectedCard({});
-    setIsOpened(false);
+    setImagePopupOpened(false);
   };
 
   function signOut() {
@@ -241,7 +241,7 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
-          isOpened={isOpened}
+          isImagePopupOpened={isImagePopupOpened}
         />
       </div>
     </CurrentUserContext.Provider>

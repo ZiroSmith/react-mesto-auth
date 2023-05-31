@@ -1,7 +1,7 @@
-function ImagePopup({ card, onClose, isOpened }) {
+function ImagePopup({ card, onClose, isImagePopupOpened }) {
   return (
     <div
-      className={`popup popup_type_expand ${isOpened ? "popup_opened" : ""}`}
+      className={`popup popup_type_expand ${isImagePopupOpened ? "popup_opened" : ""}`}
       id="popupExpand"
     >
       <div className="popup__container popup__container_expand">
