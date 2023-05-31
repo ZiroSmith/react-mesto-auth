@@ -5,7 +5,7 @@ export class Api {
   }
 
    //обработка запроса
-   _checkRequest(url, options) {
+   _request(url, options) {
     const fetchAddress = `${this._baseUrl}/${url}`
 
     return fetch(fetchAddress, options).then(res => {
@@ -20,7 +20,7 @@ export class Api {
 
   //Метод для запроса информации о пользователе с сервера
   getUserInfo() {
-    return this._checkRequest(`users/me`, {
+    return this._request(`users/me`, {
       method: 'GET',
       headers: this._headers
     })
@@ -28,7 +28,7 @@ export class Api {
 
   //Метод для загрузки массива карточек с сервера
   getInitialCards() {
-    return this._checkRequest(`cards`, {
+    return this._request(`cards`, {
       headers: this._headers
     }
     )
@@ -36,7 +36,7 @@ export class Api {
 
   //Метод для редактирования информации в профиле
   editUserInfo({ name, about }) {
-    return this._checkRequest(`users/me`, {
+    return this._request(`users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ name, about })
@@ -45,7 +45,7 @@ export class Api {
 
   //Метод для изменения аватара пользователя
   editAvatar(data){
-    return this._checkRequest(`users/me/avatar`, {
+    return this._request(`users/me/avatar`, {
       method: 'PATCH',
       body: JSON.stringify(data),
       headers: this._headers
@@ -54,7 +54,7 @@ export class Api {
 
   //Метод для добавления новой карточки (отправляет данные на сервер)
   addCard(data) {
-    return this._checkRequest(`cards`, {
+    return this._request(`cards`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: this._headers,
@@ -63,7 +63,7 @@ export class Api {
 
   ///Метод для удаления карточки (запрашивает удаление данных с сервера)
   removeCard(cardId) {
-    return this._checkRequest(`cards/${cardId}`, {
+    return this._request(`cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -71,7 +71,7 @@ export class Api {
 
   //Метод для добавления Like на карточке (запрашивает изменение данных на сервере)
   addLike(cardId) {
-    return this._checkRequest(`cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers
     })
@@ -79,7 +79,7 @@ export class Api {
 
    //Метод для удаления Like на карточке (запрашивает изменение данных на сервере)
   deleteLike(cardId) {
-    return this._checkRequest(`cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })

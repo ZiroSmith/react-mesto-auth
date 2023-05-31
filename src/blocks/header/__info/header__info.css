@@ -1,0 +1,9 @@
+.header__info {
+    color: white;
+    display: flex;
+    gap: 24px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}

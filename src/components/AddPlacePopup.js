@@ -1,42 +1,38 @@
-import React from 'react';
+import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-
-  const [name, setName] = React.useState('');
-  const [link, setLink] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [link, setLink] = React.useState("");
 
   React.useEffect(() => {
-    setName('');
-    setLink('');
-  }, [isOpen])
+    setName("");
+    setLink("");
+  }, [isOpen]);
 
   function handleChangeName(evt) {
     setName(evt.target.value);
   }
 
   function handleChangeLink(evt) {
-    setLink(evt.target.value); 
+    setLink(evt.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({
-      name: name,
-      link: link,
-    });
+    onAddPlace({ name, link });
   }
 
   return (
     <PopupWithForm
-      title={'Редактировать профиль'}
-      name={'item'}
-      buttonText={'Создать'}
+      title={"Редактировать профиль"}
+      name={"item"}
+      buttonText={"Создать"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
-    <input
+      <input
         type="text"
         name="name"
         placeholder="Название"
@@ -46,24 +42,18 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         value={name}
         onChange={handleChangeName}
       />
-    <span 
-        id="place-input-error"
-        className="form__input-error">
-    </span> 
-    <input 
+      <span id="place-input-error" className="form__input-error"></span>
+      <input
         type="url"
-        name="link" 
+        name="link"
         placeholder="Ссылка на картинку"
         required
         className="form__input form__input_type_link"
         id="url-input"
         value={link}
         onChange={handleChangeLink}
-    />
-    <span 
-        id="profession-input-error" 
-        className="url-input-error">
-    </span>
+      />
+      <span id="profession-input-error" className="url-input-error"></span>
     </PopupWithForm>
   );
 }
